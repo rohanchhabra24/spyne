@@ -9,7 +9,7 @@ import AddProduct from "./pages/AddPrdouct";
 import EditProduct from "./pages/EditProduct";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
-// import AllProducts from "./components/AllProducts";
+import AllProducts from "./components/AllProducts";
 
 // Material-UI Imports
 import { CssBaseline, Box, ThemeProvider } from "@mui/material";
