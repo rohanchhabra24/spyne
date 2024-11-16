@@ -9,7 +9,7 @@ import AddProduct from "./pages/AddPrdouct";
 import EditProduct from "./pages/EditProduct";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
-import AllProducts from "./components/AllProducts";
+// import AllProducts from "./components/AllProducts";
 
 // Material-UI Imports
 import { CssBaseline, Box, ThemeProvider } from "@mui/material";
@@ -40,7 +40,7 @@ const App = () => {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/add-product" element={<AddProduct />} />
               <Route path="/edit-product/:id" element={<EditProduct />} />
-              <Route path="/all-products" element={<AllProducts />} />
+              //<Route path="/all-products" element={<AllProducts />} />
 
               <Route path="*" element={<NotFound />} />
             </Routes>
