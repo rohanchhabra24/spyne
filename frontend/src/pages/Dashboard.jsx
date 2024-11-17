@@ -56,6 +56,17 @@ const Dashboard = () => {
     }
   };
 
+  const getImageUrl = (images) => {
+    if(images.length > 0){
+      const img = images[0]
+      const splitArr = img.split('/')
+      const imageName = splitArr[1]
+      return process.env.REACT_APP_API_BASE_URL + '/products/' + imageName
+    }
+    else return 'https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png';
+
+  }
+
   return (
     <Box
       sx={{
@@ -99,6 +110,7 @@ const Dashboard = () => {
               <Grid item xs={12} sm={6} md={4} key={product._id}>
                 <Card
                   sx={{
+                    padding: "10px",
                     borderRadius: 2,
                     boxShadow: 3,
                     overflow: "hidden",
@@ -110,10 +122,9 @@ const Dashboard = () => {
                   }}
                 >
                   {/* Product Image */}
-                  <CardMedia
-                    component="img"
-                    height="200"
-                    image={product.images?.[0] || "/placeholder.png"}
+                  <img
+                    className="w-[50px] rounded-md"
+                    src={getImageUrl(product.images)}
                     alt={product.title}
                   />
 
@@ -137,7 +148,7 @@ const Dashboard = () => {
                       p: 2,
                     }}
                   >
-                    <Tooltip title="Edit">
+                    {/* <Tooltip title="Edit">
                       <IconButton
                         href={`/edit-product/${product._id}`}
                         color="primary"
@@ -145,7 +156,7 @@ const Dashboard = () => {
                       >
                         <EditIcon />
                       </IconButton>
-                    </Tooltip>
+                    </Tooltip> */}
                     <Tooltip title="Delete">
                       <IconButton
                         color="error"

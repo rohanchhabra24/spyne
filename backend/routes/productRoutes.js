@@ -2,9 +2,11 @@ const express = require("express");
 const {
   createProduct,
   getProducts,
+  deleteProduct,
 } = require("../controllers/productController");
 const authMiddleware = require("../middleware/authMiddleware");
 const multer = require("multer");
+const path = require("path");
 
 // Configure multer for image uploads
 const storage = multer.diskStorage({
@@ -49,6 +51,46 @@ router.post(
     });
   },
   createProduct // Final middleware: Controller to create the product
+);
+
+router.delete(
+  "/:id", // Endpoint for deleting a product by its ID
+  authMiddleware, // First middleware: User authentication
+  (req, res, next) => {
+    // Optional middleware: Perform additional validation or preprocessing
+    const { id } = req.params;
+    // Example validation to ensure ID is in the correct format (e.g., MongoDB ObjectId)
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(400).json({ message: "Invalid product ID format" });
+    }
+
+    next(); // Proceed to the next middleware
+  },
+  deleteProduct // Final middleware: Controller to delete the product
+);
+
+router.get(
+  "/:filename", // Endpoint for accessing an image by filename
+  (req, res, next) => {
+    // Middleware: Validate file type
+    const filename = req.params.filename;
+
+    if (!/\.(jpg|jpeg|png|gif)$/.test(filename)) {
+      return res.status(400).json({ message: "Invalid file type" });
+    }
+
+    req.filepath = path.join(__dirname, "../uploads", filename); // Add filepath to the request object
+    next(); // Proceed to the next middleware
+  },
+  (req, res) => {
+    // Middleware: Serve the image file
+    res.sendFile(req.filepath, (err) => {
+      if (err) {
+        console.log(err);
+        res.status(404).json({ message: "Image not found" });
+      }
+    });
+  }
 );
 
 // Route to get all products with pagination

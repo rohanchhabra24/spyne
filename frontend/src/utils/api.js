@@ -1,13 +1,10 @@
 import axios from "axios";
 
-// Base API configuration
-// const API = axios.create({
+
 const API = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL, // Use 3005 as fallback
 });
-// baseURL: process.env.REACT_APP_API_BASE_URL || "/api",
-// Dynamically set base URL
-// });
+
 console.log(process.env);
 console.log("Axios baseURL:", process.env.REACT_APP_API_BASE_URL);
 

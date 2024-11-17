@@ -2,24 +2,10 @@ const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
-// Function to generate a JWT token
 const generateToken = (id) => {
   console.log("Generating Token for User ID:", id); // Debugging
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
 };
-
-// Example usage
-// const password = 'mySecurePassword123';
-
-// hashPassword(password)
-//   .then((hashedPassword) => {
-//     console.log("Hashed Password:", hashedPassword);
-//   })
-//   .catch((error) => {
-//     console.error("Error:", error);
-//   });
-
-// User Signup Controller
 exports.signUp = async (req, res) => {
   const { name, email, phone, password } = req.body;
 

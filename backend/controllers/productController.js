@@ -32,3 +32,30 @@ exports.getProducts = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+
+exports.deleteProduct = async (req, res) => {
+  const { id } = req.params; // Extract product ID from request parameters
+  try {
+    // Find the product by ID
+    const product = await Product.findById(id);
+
+    // If the product is not found, return a 404 error
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    // Check if the authenticated user is authorized to delete the product
+    if (product.createdBy.toString() !== req.user.id) {
+      return res.status(403).json({ message: "You are not authorized to delete this product" });
+    }
+
+    // Delete the product
+    await Product.findByIdAndDelete(id);
+
+    res.status(200).json({ message: "Product deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
